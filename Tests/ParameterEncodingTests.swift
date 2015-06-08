@@ -423,7 +423,7 @@ class JSONParameterEncodingTestCase: ParameterEncodingTestCase {
         XCTAssertNotNil(URLRequest.HTTPBody, "HTTPBody should not be nil")
 
         if let HTTPBody = URLRequest.HTTPBody,
-            JSON = NSJSONSerialization.JSONObjectWithData(HTTPBody, options: .AllowFragments, error: nil) as? NSObject
+            JSON = try! NSJSONSerialization.JSONObjectWithData(HTTPBody, options: .AllowFragments) as? NSObject
         {
             XCTAssertEqual(JSON, parameters as NSObject, "HTTPBody JSON does not equal parameters")
         } else {
@@ -476,7 +476,7 @@ class PropertyListParameterEncodingTestCase: ParameterEncodingTestCase {
         XCTAssertNotNil(URLRequest.HTTPBody, "HTTPBody should not be nil")
 
         if let HTTPBody = URLRequest.HTTPBody,
-            let plist = NSPropertyListSerialization.propertyListWithData(HTTPBody, options: 0, format: nil, error: nil) as? NSObject
+            let plist = try! NSPropertyListSerialization.propertyListWithData(HTTPBody, options: NSPropertyListReadOptions(rawValue: 0), format: nil) as? NSObject
         {
             XCTAssertEqual(plist, parameters as NSObject, "HTTPBody plist does not equal parameters")
         } else {
@@ -505,7 +505,7 @@ class PropertyListParameterEncodingTestCase: ParameterEncodingTestCase {
         XCTAssertNotNil(URLRequest.HTTPBody, "HTTPBody should not be nil")
 
         if let HTTPBody = URLRequest.HTTPBody,
-            let plist = NSPropertyListSerialization.propertyListWithData(HTTPBody, options: 0, format: nil, error: nil) as? NSObject
+            let plist = try! NSPropertyListSerialization.propertyListWithData(HTTPBody, options: NSPropertyListReadOptions(rawValue: 0), format: nil) as? NSObject
         {
             XCTAssertTrue(plist.valueForKey("date") is NSDate, "date is not NSDate")
             XCTAssertTrue(plist.valueForKey("data") is NSData, "data is not NSData")
